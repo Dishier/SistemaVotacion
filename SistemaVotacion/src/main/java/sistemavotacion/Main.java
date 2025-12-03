@@ -36,15 +36,16 @@ public class Main {
                 } 
                 // B) Verificar Elector
                 else {
-                    Elector elector = sistema.buscarElector(user, pass);
-                    if (elector != null) {
-                        System.out.println("Acceso Concedido: " + elector.getNombre());
+                    try {
+                        Elector elector = sistema.buscarElector(user, pass);
+                    
+                        System.out.println("Acceso concedido: " + elector.getNombre());
                         menuElector(sistema, sc, elector);
-                    } else {
-                        System.out.println("Credenciales incorrectas. (Si es elector, verifique si el padrón ya fue cargado).");
+                    } catch (CredencialesInvalidasException e) {
+                        System.out.println("Error de acceso: " + e.getMessage());
+                        System.out.println("  (Verifique sus datos o si el padron ya fue cargado).");
                     }
                 }
-
             } else if (opcion.equals("2")) {
                 salir = true;
             } else {
@@ -103,13 +104,13 @@ public class Main {
                     }
                     break;
                 case "7":
-                    regresar = true;
-                    break;
-                case "8":
                     System.out.println("--- LISTA DE CANDIDATOS ---");
                     for(Candidato c : sistema.getCandidatos()){
                         System.out.println("Nombre: " + c.getNombreCompleto() + " | Partido: " + c.getPartido() + " | Votos Recibidos: " + c.getVotosRecibidos());
                     }
+                    break;
+                case "8":
+                    regresar = true;
                     break;
                 default:
                     System.out.println("Opcion incorrecta.");
