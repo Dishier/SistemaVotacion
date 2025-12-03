@@ -1,0 +1,8 @@
+sistemavotacion\Main.class
+sistemavotacion\Candidato.class
+sistemavotacion\Persona.class
+sistemavotacion\Elector.class
+sistemavotacion\VotoInvalidoException.class
+sistemavotacion\Admin.class
+sistemavotacion\Fecha.class
+sistemavotacion\SistemaVotacion.class
