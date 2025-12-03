@@ -55,7 +55,11 @@ public class SistemaVotacion {
 }
     
     public String cargarCandidatos(String archivo){
-        if (this.candidatos == null) this.candidatos = new ArrayList<>();
+        if (this.candidatos == null){
+            this.candidatos = new ArrayList<>();
+        } else {
+            this.candidatos.clear();
+        }
         
         try (BufferedReader br = new BufferedReader(new FileReader(archivo))) {
             String lineaN;
@@ -76,7 +80,11 @@ public class SistemaVotacion {
     }
     
     public String cargarElectores(String archivo){
-        if (this.electores == null) this.electores = new ArrayList<>();
+        if (this.electores == null) {
+            this.electores = new ArrayList<>();
+        } else {
+            this.electores.clear();
+        }
         
         try (BufferedReader br = new BufferedReader(new FileReader(archivo))) {
             String n;
