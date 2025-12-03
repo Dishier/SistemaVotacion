@@ -45,14 +45,14 @@ public class SistemaVotacion {
         this.votacionAbierta = false;
     }
     
-    public Elector buscarElector(String user, String contra){
-        for (Elector e : this.electores) {
-            if (e.autenticar(user, contra)) {
-                return e;
-            }
+    public Elector buscarElector(String user, String contra) throws CredencialesInvalidasException {
+    for (Elector e : this.electores) {
+        if (e.autenticar(user, contra)) {
+            return e;
         }
-        return null;
     }
+    throw new CredencialesInvalidasException("Usuario o contrasena incorrectos."); 
+}
     
     public String cargarCandidatos(String archivo){
         if (this.candidatos == null) this.candidatos = new ArrayList<>();
