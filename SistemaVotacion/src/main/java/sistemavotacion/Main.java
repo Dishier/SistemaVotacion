@@ -31,24 +31,24 @@ public class Main {
 
                 // A) Verificar Admin
                 if (sistema.getAdmin().autenticar(user, pass)) {
-                    System.out.println("✅ Acceso Concedido: ADMINISTRADOR");
+                    System.out.println("Acceso Concedido: ADMINISTRADOR");
                     menuAdmin(sistema, sc);
                 } 
                 // B) Verificar Elector
                 else {
                     Elector elector = sistema.buscarElector(user, pass);
                     if (elector != null) {
-                        System.out.println("✅ Acceso Concedido: " + elector.getNombre());
+                        System.out.println("Acceso Concedido: " + elector.getNombre());
                         menuElector(sistema, sc, elector);
                     } else {
-                        System.out.println("❌ Credenciales incorrectas. (Si es elector, verifique si el padrón ya fue cargado).");
+                        System.out.println("Credenciales incorrectas. (Si es elector, verifique si el padrón ya fue cargado).");
                     }
                 }
 
             } else if (opcion.equals("2")) {
                 salir = true;
             } else {
-                System.out.println("Opción no válida.");
+                System.out.println("Opcion no valida.");
             }
         }
         System.out.println("Programa finalizado.");
@@ -64,11 +64,12 @@ public class Main {
             System.out.println("\n[ PANEL ADMINISTRADOR ]");
             System.out.println("1. Cargar Candidatos (txt)");
             System.out.println("2. Cargar Electores (txt)");
-            System.out.println("3. Abrir Votación");
-            System.out.println("4. Cerrar Votación");
+            System.out.println("3. Abrir Votacion");
+            System.out.println("4. Cerrar Votacion");
             System.out.println("5. Ver Resultados");
-            System.out.println("6. Ver Lista Electores (Debug)");
-            System.out.println("7. Cerrar Sesión");
+            System.out.println("6. Ver Lista Electores");
+            System.out.println("7. Ver Lista Candidatos");
+            System.out.println("8. Cerrar Sesion");
             System.out.print("Opción: ");
             
             String op = sc.nextLine();
@@ -86,14 +87,13 @@ public class Main {
                     break;
                 case "3":
                     sistema.iniciarVotacion();
-                    System.out.println("🔔 Votación ABIERTA.");
+                    System.out.println("Votacion ABIERTA.");
                     break;
                 case "4":
                     sistema.finalizarVotacion();
-                    System.out.println("🔒 Votación CERRADA.");
+                    System.out.println("Votacion CERRADA.");
                     break;
                 case "5":
-                    // Imprimimos el reporte que genera tu método con StringBuilder
                     System.out.println(sistema.imprimirResultados());
                     break;
                 case "6":
@@ -105,31 +105,34 @@ public class Main {
                 case "7":
                     regresar = true;
                     break;
+                case "8":
+                    System.out.println("--- LISTA DE CANDIDATOS ---");
+                    for(Candidato c : sistema.getCandidatos()){
+                        System.out.println("Nombre: " + c.getNombreCompleto() + " | Partido: " + c.getPartido() + " | Votos Recibidos: " + c.getVotosRecibidos());
+                    }
+                    break;
                 default:
-                    System.out.println("Opción incorrecta.");
+                    System.out.println("Opcion incorrecta.");
             }
         }
     }
-
-    // ---------------------------------------------------
-    //               MENÚ ELECTOR
-    // ---------------------------------------------------
+    
     public static void menuElector(SistemaVotacion sistema, Scanner sc, Elector elector) {
         boolean regresar = false;
         while (!regresar) {
             System.out.println("\n[ PANEL ELECTOR ]");
             System.out.println("1. Emitir Voto");
-            System.out.println("2. Cerrar Sesión");
-            System.out.print("Opción: ");
+            System.out.println("2. Cerrar Sesion");
+            System.out.print("Opcion: ");
 
             String op = sc.nextLine();
 
             if (op.equals("1")) {
                 if (elector.getHaVotado()) {
-                    System.out.println("⚠️ Usted ya votó.");
+                    System.out.println("Usted ya voto.");
                 } else {
                     realizarVoto(sistema, sc, elector);
-                    regresar = true; // Sacar al usuario después de votar
+                    regresar = true;
                 }
             } else if (op.equals("2")) {
                 regresar = true;
@@ -137,12 +140,11 @@ public class Main {
         }
     }
 
-    // Lógica auxiliar para mostrar candidatos y capturar la elección
     private static void realizarVoto(SistemaVotacion sistema, Scanner sc, Elector elector) {
         ArrayList<Candidato> lista = sistema.getCandidatos();
         
         if (lista.isEmpty()) {
-            System.out.println("❌ Error: No hay candidatos cargados en el sistema.");
+            System.out.println("Error: No hay candidatos cargados en el sistema.");
             return;
         }
 
@@ -154,7 +156,7 @@ public class Main {
         }
         System.out.println(i + ". ANULAR VOTO");
 
-        System.out.print("Seleccione su opción: ");
+        System.out.print("Seleccione su opcion: ");
         try {
             int seleccion = Integer.parseInt(sc.nextLine());
 
@@ -163,17 +165,15 @@ public class Main {
                 Candidato elegido = lista.get(seleccion - 1);
                 System.out.println("¿Confirma voto por " + elegido.getNombreCompleto() + "? (S/N)");
                 if (sc.nextLine().equalsIgnoreCase("S")) {
-                    
-                    // LLAMADA A TU MÉTODO QUE LANZA EXCEPCIÓN
+
                     try {
                         sistema.registrarVotos(elector, elegido); 
-                        System.out.println("✅ ¡Voto registrado con éxito!");
+                        System.out.println("¡Voto registrado con exito!");
                     } catch (VotoInvalidoException e) {
-                        System.out.println("❌ Error al votar: " + e.getMessage());
+                        System.out.println("Error al votar: " + e.getMessage());
                     }
                 }
             } 
-            // Opción: Anular Voto
             else if (seleccion == lista.size() + 1) {
                 System.out.println("¿Confirma ANULAR su voto? (S/N)");
                 if (sc.nextLine().equalsIgnoreCase("S")) {
@@ -181,17 +181,17 @@ public class Main {
                     // LLAMADA A TU MÉTODO DE VOTO NULO
                     try {
                         sistema.registrarVotoNulo(elector);
-                        System.out.println("⚠️ Voto anulado registrado.");
+                        System.out.println("Voto anulado registrado.");
                     } catch (VotoInvalidoException e) {
-                        System.out.println("❌ Error al votar: " + e.getMessage());
+                        System.out.println("Error al votar: " + e.getMessage());
                     }
                 }
             } else {
-                System.out.println("Opción inválida.");
+                System.out.println("Opcion invalida.");
             }
 
         } catch (NumberFormatException e) {
-            System.out.println("Error: Ingrese solo números.");
+            System.out.println("Error: Ingrese solo numeros.");
         }
     }
 }
