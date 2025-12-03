@@ -8,6 +8,32 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.release>24</maven.compiler.release>
-        <exec.mainClass>sistemavotacion.SistemaVotacion</exec.mainClass>
+        <exec.mainClass>sistemavotacion.Launcher</exec.mainClass>
     </properties>
+    
+    <dependencies>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-controls</artifactId>
+            <version>21.0.1</version> 
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-fxml</artifactId>
+            <version>21.0.1</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.openjfx</groupId>
+                <artifactId>javafx-maven-plugin</artifactId>
+                <version>0.0.8</version>
+                <configuration>
+                    <mainClass>sistemavotacion.App</mainClass> 
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>

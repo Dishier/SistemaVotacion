@@ -1,4 +1,7 @@
+sistemavotacion\CredencialesInvalidasException.class
+sistemavotacion\Launcher.class
 sistemavotacion\Main.class
+sistemavotacion\GUI.class
 sistemavotacion\Candidato.class
 sistemavotacion\Persona.class
 sistemavotacion\Elector.class
